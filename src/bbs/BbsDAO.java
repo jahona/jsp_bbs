@@ -123,4 +123,30 @@ public class BbsDAO {
 		
 		return false;
 	}
+	
+	public Bbs getBbs(int bbsId) {
+		String SQL = "SELECT * FROM BBS WHERE bbsId = ?";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  bbsId);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setBbsId(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserId(rs.getString(3));
+				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsIsDeleted(rs.getInt(6));
+				
+				return bbs;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }
