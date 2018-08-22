@@ -99,7 +99,7 @@
 					%>
 					<tr>
 						<td><%= list.get(i).getBbsId() %></td>
-						<td><a href="view.jsp?bbsId=<%= list.get(i).getBbsId() %>"><%=list.get(i).getBbsTitle() %></a></td>
+						<td><a href="view.jsp?bbsId=<%= list.get(i).getBbsId() %>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replace(">", "&gt;").replace("\n", "<br>") %></a></td>
 						<td><%= list.get(i).getUserId() %></td>
 						<td><%= list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시 " + list.get(i).getBbsDate().substring(14, 16) + "분 " %></td>
 					</tr>
