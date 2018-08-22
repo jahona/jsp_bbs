@@ -117,7 +117,6 @@
 			<%
 				}
 			%>
-			<input type="submit" class="btn btn-primary pull-right" value="글쓰기">
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
