@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class BbsDAO {
 	private Connection conn;
@@ -76,5 +77,50 @@ public class BbsDAO {
 		}
 		
 		return -1;
+	}
+	
+	public ArrayList<Bbs> getList(int pageNumber) {
+		String SQL = "SELECT * FROM BBS WHERE bbsId < ? AND bbsIsDeleted = 0 ORDER BY bbsId DESC LIMIT 10";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  getNext() - (pageNumber - 1) * 10);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setBbsId(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserId(rs.getString(3));
+				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsIsDeleted(rs.getInt(6));
+				
+				list.add(bbs);
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list; 
+	}
+	
+	public boolean nextPage(int pageNumber) {
+		String SQL = "SELECT * FROM BBS WHERE bbsId < ? AND bbsIsDeleted = 0";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  getNext() - (pageNumber - 1) * 10);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				return true;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }
