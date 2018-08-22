@@ -68,7 +68,7 @@ public class BbsDAO {
 			pstmt.setString(3,  userId);
 			pstmt.setString(4,  getDate());
 			pstmt.setString(5,  bbsContent);
-			pstmt.setInt(6,  1);
+			pstmt.setInt(6,  0);
 
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
