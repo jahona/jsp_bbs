@@ -149,4 +149,34 @@ public class BbsDAO {
 		
 		return null;
 	}
+	
+	public int update(int bbsId, String bbsTitle, String bbsContent) {
+		String SQL = "UPDATE BBS SET bbsTitle = ?, bbsContent = ? WHERE bbsId = ?";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, bbsTitle);
+			pstmt.setString(2, bbsContent);
+			pstmt.setInt(3,  bbsId);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return -1; 	// db error
+	}
+	
+	public int delete(int bbsId) {
+		String SQL = "UPDATE BBS SET bbsIsDeleted = 1 WHERE bbsId = ?";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  bbsId);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return -1; 	// db error
+	}
 }
